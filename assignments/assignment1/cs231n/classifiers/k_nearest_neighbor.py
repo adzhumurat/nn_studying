@@ -77,7 +77,10 @@ class KNearestNeighbor(object):
                 #####################################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-                pass
+                dist_ij = np.sqrt(
+                    (X[i, :] - self.X_train[j, :]) ** 2
+                ).sum()
+                dists[i, j] = dist_ij
 
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -164,7 +167,10 @@ class KNearestNeighbor(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
+            # находим ближайшие объекты (по матрице расстояний)
+            closest_object_list = np.argsort(dists[i, :])[:k]
+            # смотрим, к какому классу относятся ближайшие объекты
+            closest_labels = self.y_train[closest_object_list]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             #########################################################################
@@ -176,7 +182,9 @@ class KNearestNeighbor(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            pass
+            labels, counts = np.unique(closest_labels, return_counts=True)
+            # разрешение коллизий (breaking ties) происходит внутри argmax
+            y_pred[i] = labels[np.argmax(counts)]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
