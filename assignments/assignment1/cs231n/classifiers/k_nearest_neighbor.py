@@ -79,7 +79,7 @@ class KNearestNeighbor(object):
 
                 dist_ij = np.sqrt(
                     (
-                            np.pow(X[i, :] - self.X_train[j, :], 2)
+                            np.power(X[i, :] - self.X_train[j, :], 2)
                     ).sum()
                 )
                 dists[i, j] = dist_ij
@@ -139,7 +139,13 @@ class KNearestNeighbor(object):
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        X_broadcast = (X ** 2).sum(axis=1).reshape(-1, 1)
+        X_train_broadcast = (self.X_train ** 2).sum(axis=1).reshape(1, -1)
+        X_dot_X_train = X.dot(self.X_train.T)
+        # (x-y)^2 = x^2 - 2xy + y^2
+        dists = np.sqrt(
+            X_broadcast + X_train_broadcast - 2 * X_dot_X_train
+        )
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
