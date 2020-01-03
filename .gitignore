@@ -1,6 +1,7 @@
 *.swp
 *.pyc
 assignments/.venv
+assignments/.cache
 assignments/assignment1/ipynb_checkpoints/*
 assignments/assignment1/cs231n/datasets/cifar-10-batches-py
 
